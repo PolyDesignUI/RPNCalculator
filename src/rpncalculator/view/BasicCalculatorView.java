@@ -24,7 +24,7 @@ public class BasicCalculatorView {
         });
     }
 
-    public void setValueDisplayed(int value){
+    public void setValueDisplayed(double value){
         display.setValueDisplayed(value);
     }
 

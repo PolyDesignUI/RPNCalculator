@@ -52,11 +52,11 @@ public class DisplayPanel extends JPanel implements ActionListener{
         this.add(trashButton,gridBagConstraints);
     }
 
-    public void setValueDisplayed(final int value){
+    public void setValueDisplayed(final double value){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                displayField.setText(Integer.toString(value));
+                displayField.setText(Double.toString(value));
             }
         });
     }
