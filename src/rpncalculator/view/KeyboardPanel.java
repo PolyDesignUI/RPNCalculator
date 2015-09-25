@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 public class KeyboardPanel extends JPanel implements ActionListener {
 
@@ -158,5 +160,49 @@ public class KeyboardPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if("0".equals(e.getActionCommand())){
+        }
+        else if("1".equals(e.getActionCommand())){
+
+        }
+        else if("2".equals(e.getActionCommand())){
+
+        }
+        else if("3".equals(e.getActionCommand())){
+
+        }
+        else if("4".equals(e.getActionCommand())){
+
+        }
+        else if("5".equals(e.getActionCommand())){
+
+        }
+        else if("6".equals(e.getActionCommand())){
+
+        }
+        else if("7".equals(e.getActionCommand())){
+
+        }
+        else if("8".equals(e.getActionCommand())){
+
+        }
+        else if("9".equals(e.getActionCommand())){
+
+        }
+        else if("add".equals(e.getActionCommand())){
+
+        }
+        else if("sub".equals(e.getActionCommand())){
+
+        }
+        else if("div".equals(e.getActionCommand())){
+
+        }
+        else if("mul".equals(e.getActionCommand())){
+
+        }
+        else if("enter".equals(e.getActionCommand())){
+
+        }
     }
 }
