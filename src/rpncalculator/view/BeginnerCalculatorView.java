@@ -36,7 +36,7 @@ public class BeginnerCalculatorView {
     public BeginnerCalculatorView(){
         level = new LevelPanel(LevelPanel.STATE_BEGINNER);
         display = new ComplexDisplayPanel();
-        keyboard = new KeyboardPanel();
+        keyboard = new KeyboardPanel(null);
     }
 
     public void setValuesDisplayed(Stack<Double> values){

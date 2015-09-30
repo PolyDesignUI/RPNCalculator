@@ -24,16 +24,17 @@ public class BasicCalculatorControler {
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView theBeginnerView;
     private TutorialView theTutorialView;
-    private StringBuffer currentNumber;
+    private StringBuffer currentNumber = new StringBuffer();
 
     private boolean calcControl = true;
 
-    public BasicCalculatorControler(Calculatrice theCalculatrice, BasicCalculatorView theBasicView,BeginnerCalculatorView theBeginnerView, TutorialView theTutorialView){
+    public BasicCalculatorControler(){
 
-        this.theCalculatrice=theCalculatrice;
-        this.theBasicView=theBasicView;
-        this.theBeginnerView=theBeginnerView;
-        this.theTutorialView=theTutorialView;
+
+        this.theCalculatrice= new Calculatrice() ;
+        this.theBasicView= new BasicCalculatorView(this);
+        this.theBeginnerView=new BeginnerCalculatorView();
+        this.theTutorialView=new TutorialView();
         theBasicView.createGUI();
 
 
@@ -42,7 +43,7 @@ public class BasicCalculatorControler {
     public void performDigit(Character e){
 
 
-        currentNumber.setCharAt(currentNumber.length(), e);
+        currentNumber.append(e);
         String str = currentNumber.toString();
         double value = Double.parseDouble(str);
         theBasicView.setValueDisplayed(value);
@@ -52,19 +53,20 @@ public class BasicCalculatorControler {
     public void performOperand(int e){
         double result;
         Iterator<Double> itr;
+
         double value = Double.parseDouble(currentNumber.toString());
         theCalculatrice.empiler(value);
-        
         if(calcControl){
 
         if(e==OPERAND_ADD){theCalculatrice.ajouter();} //addition
         if(e==OPERAND_SUB){theCalculatrice.soustraire();} //subtraction
         if(e==OPERAND_MUL){theCalculatrice.multiplier();} //multiplication
         if(e==OPERAND_DIV){theCalculatrice.diviser();} //division
-        if(e==OPERAND_ENTER){ itr=theCalculatrice.lirePile(); result=itr.next(); theCalculatrice.empiler(result);}  //enter
+        if(e==OPERAND_ENTER){}  //enter
         if(e==OPERAND_CLEAR){theCalculatrice.reinitialiser();} //clear
-            result= theCalculatrice.obtenirResultat();
-            theBasicView.setValueDisplayed(result);
+            value= theCalculatrice.obtenirResultat();
+            currentNumber = new StringBuffer(Double.toString(value));
+            theBasicView.setValueDisplayed(value);
         }
         else{
 
