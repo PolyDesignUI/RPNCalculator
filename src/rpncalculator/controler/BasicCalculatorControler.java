@@ -16,14 +16,16 @@ public class BasicCalculatorControler {
     private Calculatrice theCalculatrice;
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView theBeginnerView;
+    private TutorialView theTutorialView;
 
     private boolean calcControl = true;
 
-    public BasicCalculatorControler(Calculatrice theCalculatrice, BasicCalculatorView theBasicView,BeginnerCalculatorView theBeginnerView){
+    public BasicCalculatorControler(Calculatrice theCalculatrice, BasicCalculatorView theBasicView,BeginnerCalculatorView theBeginnerView, TutorialView theTutorialView){
 
         this.theCalculatrice=theCalculatrice;
         this.theBasicView=theBasicView;
         this.theBeginnerView=theBeginnerView;
+        this.theTutorialView=theTutorialView;
         theBasicView.createGUI();
 
 
@@ -51,7 +53,6 @@ public class BasicCalculatorControler {
         }
         else{
 
-
             if(e==1){theCalculatrice.ajouter();} //addition
             if(e==2){theCalculatrice.soustraire();} //subtraction
             if(e==3){theCalculatrice.multiplier();} //multiplication
@@ -66,14 +67,22 @@ public class BasicCalculatorControler {
 
     public void openBeginnerCalculator(){
         calcControl=false;
+        theBasicView.close();
         theBeginnerView.createGUI();
+        //theTutorialView.createGUI();
+
 
     }
 
     public void openBasicCalculator(){
         calcControl=true;
+        theBeginnerView.close();
+        theTutorialView.close();
         theBasicView.createGUI();
 
+
     }
+
+
 
 }
