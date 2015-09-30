@@ -36,6 +36,7 @@ public class Calculatrice {
      *		...	
      * }
      * @return un iterateur sur la pile
+     *
      */
     public Iterator<Double> lirePile(){
         return pile.iterator();
@@ -44,11 +45,19 @@ public class Calculatrice {
     /**
      * Cette methtode permet de reinitialiser la calculatrice
      */
+
+    //this method gives the stack
+    public Stack<Double> getPile() {return pile; }
+
+
+
     public void reinitialiser(){
         pile.clear();
         exEnCours = null;
         sequence.clear();
     }
+
+
 	
     /**
      * Cette methode permet d'empiler un operande sur la pile.

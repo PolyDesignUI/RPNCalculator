@@ -15,32 +15,29 @@ public class BasicCalculatorView {
         level = new LevelPanel(LevelPanel.STATE_BASIC);
         display = new DisplayPanel();
         keyboard = new KeyboardPanel();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                createGUI();
-            }
-        });
     }
 
     public void setValueDisplayed(double value){
         display.setValueDisplayed(value);
     }
 
-    private void createGUI(){
+    public void createGUI(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                    JPanel content = new JPanel();
+                    content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+                    content.add(level);
+                    content.add(display);
+                    content.add(keyboard);
 
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.add(level);
-        content.add(display);
-        content.add(keyboard);
-
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().add(content);
-        frame.pack();
-        frame.setSize(300,300);
-        frame.setVisible(true);
+                    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    frame.getContentPane().add(content);
+                    frame.pack();
+                    frame.setSize(300,300);
+                    frame.setVisible(true);
+            }
+        });
     }
 
     public void close(){

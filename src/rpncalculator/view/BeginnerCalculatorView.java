@@ -12,32 +12,31 @@ public class BeginnerCalculatorView {
     private ComplexDisplayPanel display;
     private KeyboardPanel keyboard;
 
-    private void createGUI(){
+    public void createGUI(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
 
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.add(level);
-        content.add(display);
-        content.add(keyboard);
+                JPanel content = new JPanel();
+                content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+                content.add(level);
+                content.add(display);
+                content.add(keyboard);
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().add(content);
-        frame.pack();
-        frame.setSize(300,300);
-        frame.setVisible(true);
+                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                frame.getContentPane().add(content);
+                frame.pack();
+                frame.setSize(300,300);
+                frame.setVisible(true);
+            }
+        });
+
     }
 
     public BeginnerCalculatorView(){
         level = new LevelPanel(LevelPanel.STATE_BEGINNER);
         display = new ComplexDisplayPanel();
         keyboard = new KeyboardPanel();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                createGUI();
-            }
-        });
     }
 
     public void setValuesDisplayed(Stack<Double> values){
