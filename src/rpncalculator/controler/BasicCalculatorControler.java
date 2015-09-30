@@ -17,6 +17,7 @@ public class BasicCalculatorControler {
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView theBeginnerView;
     private TutorialView theTutorialView;
+    private StringBuffer currentNumber;
 
     private boolean calcControl = true;
 
@@ -31,15 +32,20 @@ public class BasicCalculatorControler {
 
     }
 
-    public void performDigit(double e){
+    public void performDigit(Character e){
 
-        theCalculatrice.empiler(e);
+
+        currentNumber.setCharAt(currentNumber.length(), e);
+        String str = currentNumber.toString();
+        double value = Double.parseDouble(str);
+        theBasicView.setValueDisplayed(value);
 
     }
 
     public void performOperand(int e){
         double result;
         Iterator<Double> itr;
+        
         if(calcControl){
 
         if(e==1){theCalculatrice.ajouter();} //addition
@@ -57,7 +63,7 @@ public class BasicCalculatorControler {
             if(e==2){theCalculatrice.soustraire();} //subtraction
             if(e==3){theCalculatrice.multiplier();} //multiplication
             if(e==4){theCalculatrice.diviser();} //division
-            if(e==5){ itr=theCalculatrice.lirePile();}  //enter
+            if(e==5){ itr=theCalculatrice.lirePile(); result=itr.next(); theCalculatrice.empiler(result);}  //enter
             if(e==6){theCalculatrice.reinitialiser();} //clear
             Stack<Double> pile = theCalculatrice.getPile();
             theBeginnerView.setValuesDisplayed(pile);
