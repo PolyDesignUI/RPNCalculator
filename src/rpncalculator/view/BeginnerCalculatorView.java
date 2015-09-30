@@ -47,4 +47,14 @@ public class BeginnerCalculatorView {
     public static void main(String[] args) {
         new BeginnerCalculatorView();
     }
+
+    public void close(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
+    }
 }

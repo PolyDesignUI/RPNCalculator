@@ -43,6 +43,16 @@ public class BasicCalculatorView {
         frame.setVisible(true);
     }
 
+    public void close(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
+    }
+
     public static void main(String[] args) {
         new BasicCalculatorView();
     }
