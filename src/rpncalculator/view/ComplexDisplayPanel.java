@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Stack;
 
 public class ComplexDisplayPanel extends JPanel implements ActionListener {
@@ -115,14 +116,14 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
 
     }
 
-    void setValuesDisplayed(final Stack<Double> values) {
+    void setValuesDisplayed(final Iterator<Double> it, final int size) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                 xField.setText(Double.toString(values.get(0)));
-                 yField.setText(Double.toString(values.get(1)));
-                 zField.setText(Double.toString(values.get(2)));
-                 tField.setText(Double.toString(values.get(3)));
+                tField.setText((size >= 4 ? Double.toString(it.next()) : "0.0"));
+                zField.setText((size >= 3 ? Double.toString(it.next()) : "0.0"));
+                yField.setText((size >= 2 ? Double.toString(it.next()) : "0.0"));
+                xField.setText((size >= 1 ? Double.toString(it.next()) : "0.0"));
             }
         });
     }

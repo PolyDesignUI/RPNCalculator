@@ -1,10 +1,14 @@
 package rpncalculator.view;
 
 
+import rpncalculator.model.Calculatrice;
+
 import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Stack;
 
-public class BeginnerCalculatorView {
+public class BeginnerCalculatorView  implements Observer {
 
     private JFrame frame = new JFrame("RPN");
 
@@ -26,7 +30,7 @@ public class BeginnerCalculatorView {
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 frame.getContentPane().add(content);
                 frame.pack();
-                frame.setSize(300,300);
+                frame.setSize(300, 300);
                 frame.setVisible(true);
             }
         });
@@ -36,11 +40,7 @@ public class BeginnerCalculatorView {
     public BeginnerCalculatorView(){
         level = new LevelPanel(LevelPanel.STATE_BEGINNER);
         display = new ComplexDisplayPanel();
-        keyboard = new KeyboardPanel(null);
-    }
-
-    public void setValuesDisplayed(Stack<Double> values){
-        display.setValuesDisplayed(values);
+        keyboard = new KeyboardPanel();
     }
 
     public static void main(String[] args) {
@@ -55,5 +55,13 @@ public class BeginnerCalculatorView {
                 frame.dispose();
             }
         });
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof Calculatrice){
+            Calculatrice c = (Calculatrice) o;
+            display.setValuesDisplayed(c.getPile().iterator(),c.getPile().size());
+        }
     }
 }

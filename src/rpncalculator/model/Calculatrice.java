@@ -1,23 +1,20 @@
 package rpncalculator.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Cette classe represente une calculatrice RPN avec une pile de taille 4.
  * @author Dany Khalife
  * @date 9/4/2014
  */
-public class Calculatrice {
+public class Calculatrice extends Observable {
     private final int TAILLE_MAX = 4;
     private Stack<Double> pile = new Stack<Double>();
     private ArrayList<Exercice> exercices = new ArrayList<Exercice>();
     private Exercice exEnCours;
     private Random random = new Random();
     private ArrayList<String> sequence = new ArrayList<String>();
-    
+    private StringBuffer numberBuffer = new StringBuffer();
     /**
      * Constructeur par defaut
      */
@@ -38,8 +35,8 @@ public class Calculatrice {
      * @return un iterateur sur la pile
      *
      */
-    public Iterator<Double> lirePile(){
-        return pile.iterator();
+    public ListIterator<Double> lirePile(){
+        return pile.listIterator();
     }
 	
     /**
@@ -63,13 +60,42 @@ public class Calculatrice {
      * Cette methode permet d'empiler un operande sur la pile.
      * @param arg L'operande a ajouter 
      */
-    public void empiler(Double arg){
-        if(pile.size() == TAILLE_MAX)
+    public void enter(){
+        if(pile.size() == TAILLE_MAX){
             pile.remove(0);
+        }
 
-        pile.push(arg);
-        sequence.add(arg.toString());
+        if(numberBuffer.length() == 0){
+            if(pile.empty()){
+                pile.push(0.0);
+            }
+            else{
+                pile.push(pile.peek());
+            }
+        }
+        else{
+            pile.push(Double.parseDouble(numberBuffer.toString()));
+        }
+
+        sequence.add(pile.peek().toString());
         sequence.add("E");
+        numberBuffer = new StringBuffer();
+
+        this.setChanged();
+        this.notifyObservers();
+    }
+
+    public void addDigit(char e){
+        numberBuffer.append(e);
+        if(pile.size() > 0){
+            pile.pop();
+        }
+        if(pile.size() == TAILLE_MAX){
+            pile.remove(0);
+        }
+        pile.push(Double.parseDouble(numberBuffer.toString()));
+        this.setChanged();
+        this.notifyObservers();
     }
 	
     /**
@@ -79,6 +105,8 @@ public class Calculatrice {
     private Double lire(){
         if(pile.size() == 0)
             return 0.0;
+
+        numberBuffer = new StringBuffer();
 
         return pile.pop();
     }
@@ -90,6 +118,8 @@ public class Calculatrice {
     public void ajouter(){
         pile.push(lire() + lire());
         sequence.add("+");
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -101,6 +131,8 @@ public class Calculatrice {
         Double b = lire();
         pile.push(b - a);
         sequence.add("-");
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -110,6 +142,8 @@ public class Calculatrice {
     public void multiplier(){
         pile.push(lire() * lire());
         sequence.add("*");
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -123,6 +157,8 @@ public class Calculatrice {
         if(a==0){throw new IllegalArgumentException("Argument 'divisor' is 0");}
         pile.push(b / a);
         sequence.add("/");
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**

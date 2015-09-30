@@ -1,11 +1,11 @@
 package rpncalculator;
 
-import rpncalculator.controler.BasicCalculatorControler;
+import rpncalculator.controler.CalculatorControler;
 
 public class Main {
     public static void main(String[] args) {
 
-        new BasicCalculatorControler();
+        CalculatorControler.getInstance();
 
     }
 }

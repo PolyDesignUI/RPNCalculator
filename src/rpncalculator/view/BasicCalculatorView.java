@@ -1,11 +1,14 @@
 package rpncalculator.view;
 
 
-import rpncalculator.controler.BasicCalculatorControler;
+import rpncalculator.controler.CalculatorControler;
+import rpncalculator.model.Calculatrice;
 
 import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class BasicCalculatorView {
+public class BasicCalculatorView implements Observer{
 
     private JFrame frame = new JFrame("RPN");
 
@@ -13,10 +16,10 @@ public class BasicCalculatorView {
     private DisplayPanel display;
     private KeyboardPanel keyboard;
 
-    public BasicCalculatorView(BasicCalculatorControler controler) {
+    public BasicCalculatorView() {
         level = new LevelPanel(LevelPanel.STATE_BASIC);
         display = new DisplayPanel();
-        keyboard = new KeyboardPanel(controler);
+        keyboard = new KeyboardPanel();
     }
 
     public void setValueDisplayed(double value){
@@ -54,5 +57,13 @@ public class BasicCalculatorView {
 
     public static void main(String[] args) {
         //new BasicCalculatorView();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof Calculatrice){
+            Calculatrice c = (Calculatrice) o;
+            display.setValueDisplayed(c.obtenirResultat());
+        }
     }
 }
