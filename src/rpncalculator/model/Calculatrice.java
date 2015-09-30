@@ -111,6 +111,7 @@ public class Calculatrice {
     	Double a = lire();
     	Double b = lire();
         //TODO : disivion par 0
+        if(a==0){throw new IllegalArgumentException("Argument 'divisor' is 0");}
         pile.push(b / a);
         sequence.add("/");
     }

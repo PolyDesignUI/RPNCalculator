@@ -2,6 +2,8 @@ package rpncalculator.controler;
 
 import rpncalculator.model.Calculatrice;
 import rpncalculator.view.BasicCalculatorView;
+import rpncalculator.view.BeginnerCalculatorView;
+import rpncalculator.view.TutorialView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,11 +41,11 @@ public class BasicCalculatorControler {
         if(e==6){theCalculatrice.reinitialiser();} //clear
     }
 
+    public void openBeginnerCalculator(){
 
+        new BeginnerCalculatorControler();
+        new BeginnerCalculatorView();
+        new TutorialView();
 
-
-
-
-
-
+    }
 }
