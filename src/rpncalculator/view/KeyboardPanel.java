@@ -1,6 +1,8 @@
 package rpncalculator.view;
 
 
+import rpncalculator.controler.BasicCalculatorControler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,9 +30,11 @@ public class KeyboardPanel extends JPanel implements ActionListener {
     private JButton nineButton;
     private JButton zeroButton;
 
-    public KeyboardPanel() {
-        super();
+    private BasicCalculatorControler controler;
 
+    public KeyboardPanel(BasicCalculatorControler controler) {
+        super();
+        this.controler = controler;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -161,48 +165,49 @@ public class KeyboardPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if("0".equals(e.getActionCommand())){
+            this.controler.performDigit(0);
         }
         else if("1".equals(e.getActionCommand())){
-
+            this.controler.performDigit(1);
         }
         else if("2".equals(e.getActionCommand())){
-
+            this.controler.performDigit(2);
         }
         else if("3".equals(e.getActionCommand())){
-
+            this.controler.performDigit(3);
         }
         else if("4".equals(e.getActionCommand())){
-
+            this.controler.performDigit(4);
         }
         else if("5".equals(e.getActionCommand())){
-
+            this.controler.performDigit(5);
         }
         else if("6".equals(e.getActionCommand())){
-
+            this.controler.performDigit(6);
         }
         else if("7".equals(e.getActionCommand())){
-
+            this.controler.performDigit(7);
         }
         else if("8".equals(e.getActionCommand())){
-
+            this.controler.performDigit(8);
         }
         else if("9".equals(e.getActionCommand())){
-
+            this.controler.performDigit(9);
         }
         else if("add".equals(e.getActionCommand())){
-
+            this.controler.performOperand(BasicCalculatorControler.OPERAND_ADD);
         }
         else if("sub".equals(e.getActionCommand())){
-
+            this.controler.performOperand(BasicCalculatorControler.OPERAND_SUB);
         }
         else if("div".equals(e.getActionCommand())){
-
+            this.controler.performOperand(BasicCalculatorControler.OPERAND_DIV);
         }
         else if("mul".equals(e.getActionCommand())){
-
+            this.controler.performOperand(BasicCalculatorControler.OPERAND_MUL);
         }
         else if("enter".equals(e.getActionCommand())){
-
+            this.controler.performOperand(BasicCalculatorControler.OPERAND_ENTER);
         }
     }
 }

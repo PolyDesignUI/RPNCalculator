@@ -13,6 +13,13 @@ import java.util.Stack;
 
 public class BasicCalculatorControler {
 
+    public static final int OPERAND_ADD = 1;
+    public static final int OPERAND_SUB = 2;
+    public static final int OPERAND_MUL = 3;
+    public static final int OPERAND_DIV = 4;
+    public static final int OPERAND_ENTER = 5;
+    public static final int OPERAND_CLEAR = 6;
+
     private Calculatrice theCalculatrice;
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView theBeginnerView;
@@ -42,23 +49,23 @@ public class BasicCalculatorControler {
         Iterator<Double> itr;
         if(calcControl){
 
-        if(e==1){theCalculatrice.ajouter();} //addition
-        if(e==2){theCalculatrice.soustraire();} //subtraction
-        if(e==3){theCalculatrice.multiplier();} //multiplication
-        if(e==4){theCalculatrice.diviser();} //division
-        if(e==5){ itr=theCalculatrice.lirePile(); result=itr.next(); theCalculatrice.empiler(result);}  //enter
-        if(e==6){theCalculatrice.reinitialiser();} //clear
+        if(e==OPERAND_ADD){theCalculatrice.ajouter();} //addition
+        if(e==OPERAND_SUB){theCalculatrice.soustraire();} //subtraction
+        if(e==OPERAND_MUL){theCalculatrice.multiplier();} //multiplication
+        if(e==OPERAND_DIV){theCalculatrice.diviser();} //division
+        if(e==OPERAND_ENTER){ itr=theCalculatrice.lirePile(); result=itr.next(); theCalculatrice.empiler(result);}  //enter
+        if(e==OPERAND_CLEAR){theCalculatrice.reinitialiser();} //clear
             result= theCalculatrice.obtenirResultat();
             theBasicView.setValueDisplayed(result);
         }
         else{
 
-            if(e==1){theCalculatrice.ajouter();} //addition
-            if(e==2){theCalculatrice.soustraire();} //subtraction
-            if(e==3){theCalculatrice.multiplier();} //multiplication
-            if(e==4){theCalculatrice.diviser();} //division
-            if(e==5){ itr=theCalculatrice.lirePile();}  //enter
-            if(e==6){theCalculatrice.reinitialiser();} //clear
+            if(e==OPERAND_ADD){theCalculatrice.ajouter();} //addition
+            if(e==OPERAND_SUB){theCalculatrice.soustraire();} //subtraction
+            if(e==OPERAND_MUL){theCalculatrice.multiplier();} //multiplication
+            if(e==OPERAND_DIV){theCalculatrice.diviser();} //division
+            if(e==OPERAND_ENTER){ itr=theCalculatrice.lirePile();}  //enter
+            if(e==OPERAND_CLEAR){theCalculatrice.reinitialiser();} //clear
             Stack<Double> pile = theCalculatrice.getPile();
             theBeginnerView.setValuesDisplayed(pile);
         }
