@@ -52,6 +52,8 @@ public class BasicCalculatorControler {
     public void performOperand(int e){
         double result;
         Iterator<Double> itr;
+        double value = Double.parseDouble(currentNumber.toString());
+        theCalculatrice.empiler(value);
         
         if(calcControl){
 
