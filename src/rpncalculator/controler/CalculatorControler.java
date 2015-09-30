@@ -74,6 +74,10 @@ public class CalculatorControler {
             case OPERAND_ENTER:
                 theCalculatrice.enter();
                 break;
+            default:
+            case OPERAND_CLEAR:
+                theCalculatrice.reinitialiser();
+                break;
         }
     }
 

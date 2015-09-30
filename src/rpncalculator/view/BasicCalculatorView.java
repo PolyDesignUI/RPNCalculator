@@ -22,10 +22,6 @@ public class BasicCalculatorView implements Observer{
         keyboard = new KeyboardPanel();
     }
 
-    public void setValueDisplayed(double value){
-        display.setValueDisplayed(value);
-    }
-
     public void createGUI(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -63,7 +59,7 @@ public class BasicCalculatorView implements Observer{
     public void update(Observable o, Object arg) {
         if(o instanceof Calculatrice){
             Calculatrice c = (Calculatrice) o;
-            display.setValueDisplayed(c.obtenirResultat());
+            display.setValueDisplayed(c.obtenirResultat(),c.getSequence());
         }
     }
 }

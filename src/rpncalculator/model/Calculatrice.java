@@ -52,13 +52,16 @@ public class Calculatrice extends Observable {
         pile.clear();
         exEnCours = null;
         sequence.clear();
+        numberBuffer = new StringBuffer();
+
+        this.setChanged();
+        this.notifyObservers();
     }
 
 
 	
     /**
      * Cette methode permet d'empiler un operande sur la pile.
-     * @param arg L'operande a ajouter 
      */
     public void enter(){
         if(pile.size() == TAILLE_MAX){
@@ -75,9 +78,9 @@ public class Calculatrice extends Observable {
         }
         else{
             pile.push(Double.parseDouble(numberBuffer.toString()));
+            sequence.add(pile.peek().toString());
         }
 
-        sequence.add(pile.peek().toString());
         sequence.add("E");
         numberBuffer = new StringBuffer();
 
@@ -116,6 +119,7 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur somme
      **/
     public void ajouter(){
+        sequence.add(pile.peek().toString());
         pile.push(lire() + lire());
         sequence.add("+");
         this.setChanged();
@@ -127,6 +131,7 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur difference
      **/
     public void soustraire(){
+        sequence.add(pile.peek().toString());
         Double a = lire();
         Double b = lire();
         pile.push(b - a);
@@ -140,8 +145,9 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur produit
      **/
     public void multiplier(){
+        sequence.add(pile.peek().toString());
         pile.push(lire() * lire());
-        sequence.add("*");
+        sequence.add("x");
         this.setChanged();
         this.notifyObservers();
     }
@@ -151,6 +157,7 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur division
      **/
     public void diviser(){
+        sequence.add(pile.peek().toString());
     	Double a = lire();
     	Double b = lire();
         //TODO : disivion par 0
@@ -172,7 +179,11 @@ public class Calculatrice extends Observable {
 			
         return pile.peek();
     }
-    
+
+    public String getSequence(){
+        return join(sequence, " ").toLowerCase();
+    }
+
     /**
      * Methode interne, utilisee pour coller un tableau de chaines de caracteres
      * @param ar Le tableau de chaines caracteres

@@ -61,7 +61,7 @@ public class BeginnerCalculatorView  implements Observer {
     public void update(Observable o, Object arg) {
         if(o instanceof Calculatrice){
             Calculatrice c = (Calculatrice) o;
-            display.setValuesDisplayed(c.getPile().iterator(),c.getPile().size());
+            display.setValuesDisplayed(c.getPile().iterator(),c.getPile().size(),c.getSequence());
         }
     }
 }

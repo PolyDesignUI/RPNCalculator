@@ -1,5 +1,7 @@
 package rpncalculator.view;
 
+import rpncalculator.controler.CalculatorControler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,7 @@ import java.util.Stack;
 
 public class ComplexDisplayPanel extends JPanel implements ActionListener {
 
+    private JLabel operationField;
     private JTextField xField;
     private JTextField yField;
     private JTextField zField;
@@ -51,6 +54,9 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
         tField.setText("0");
         tField.setHorizontalAlignment(JTextField.RIGHT);
 
+        operationField = new JLabel("");
+        operationField.setFont(new Font("SansSerif", Font.BOLD, 12));
+
         trashButton = new JButton("D");
         trashButton.addActionListener(this);
 
@@ -59,64 +65,72 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         this.add(new JLabel(" X :"),gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.weightx = 1.0;
         this.add(xField,gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.weightx = 0;
         this.add(trashButton,gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.weightx = 0;
         this.add(new JLabel(" Y :"),gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.weightx = 1.0;
         this.add(yField,gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.weightx = 0;
         this.add(new JLabel(" Z :"),gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.weightx = 1.0;
         this.add(zField,gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.weightx = 0;
         this.add(new JLabel(" T :"),gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.weightx = 1.0;
         this.add(tField,gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.gridwidth = 2;
+        this.add(operationField,gridBagConstraints);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_CLEAR);
 
     }
 
-    void setValuesDisplayed(final Iterator<Double> it, final int size) {
+    void setValuesDisplayed(final Iterator<Double> it, final int size, final String operation) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -124,6 +138,7 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
                 zField.setText((size >= 3 ? Double.toString(it.next()) : "0.0"));
                 yField.setText((size >= 2 ? Double.toString(it.next()) : "0.0"));
                 xField.setText((size >= 1 ? Double.toString(it.next()) : "0.0"));
+                operationField.setText(operation);
             }
         });
     }
