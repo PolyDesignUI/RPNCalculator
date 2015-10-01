@@ -31,7 +31,6 @@ public class BeginnerCalculatorView  implements Observer {
                 frame.getContentPane().add(content);
                 frame.pack();
                 frame.setSize(300, 300);
-                frame.setVisible(true);
             }
         });
 
@@ -41,10 +40,7 @@ public class BeginnerCalculatorView  implements Observer {
         level = new LevelPanel(LevelPanel.STATE_BEGINNER);
         display = new ComplexDisplayPanel();
         keyboard = new KeyboardPanel();
-    }
-
-    public static void main(String[] args) {
-        new BeginnerCalculatorView();
+        createGUI();
     }
 
     public void close(){
@@ -52,7 +48,15 @@ public class BeginnerCalculatorView  implements Observer {
             @Override
             public void run() {
                 frame.setVisible(false);
-                frame.dispose();
+            }
+        });
+    }
+
+    public void show(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setVisible(true);
             }
         });
     }

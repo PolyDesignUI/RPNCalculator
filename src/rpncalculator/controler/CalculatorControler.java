@@ -47,8 +47,14 @@ public class CalculatorControler {
 
     public void switchMode(Mode newMode){
         this.mode = newMode;
-        theBasicView.createGUI();
-        beginnerView.createGUI();
+        if(mode.equals(Mode.BASIC)){
+            theBasicView.show();
+            beginnerView.close();
+        }
+        else{
+            theBasicView.close();
+            beginnerView.show();
+        }
     }
 
     public void performDigit(char e){

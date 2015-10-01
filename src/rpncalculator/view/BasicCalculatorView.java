@@ -20,6 +20,7 @@ public class BasicCalculatorView implements Observer{
         level = new LevelPanel(LevelPanel.STATE_BASIC);
         display = new DisplayPanel();
         keyboard = new KeyboardPanel();
+        createGUI();
     }
 
     public void createGUI(){
@@ -36,7 +37,6 @@ public class BasicCalculatorView implements Observer{
                 frame.getContentPane().add(content);
                 frame.pack();
                 frame.setSize(300, 300);
-                frame.setVisible(true);
             }
         });
     }
@@ -46,13 +46,17 @@ public class BasicCalculatorView implements Observer{
             @Override
             public void run() {
                 frame.setVisible(false);
-                frame.dispose();
             }
         });
     }
 
-    public static void main(String[] args) {
-        //new BasicCalculatorView();
+    public void show(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setVisible(true);
+            }
+        });
     }
 
     @Override

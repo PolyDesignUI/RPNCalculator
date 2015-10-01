@@ -1,6 +1,8 @@
 package rpncalculator.view;
 
 
+import rpncalculator.controler.CalculatorControler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -63,10 +65,10 @@ public class LevelPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if("beginner".equals(e.getActionCommand())){
-            // TODO call observer
+            CalculatorControler.getInstance().switchMode(CalculatorControler.Mode.BEGINNER);
         }
         else{
-            // TODO call observer
+            CalculatorControler.getInstance().switchMode(CalculatorControler.Mode.BASIC);
         }
     }
 }
