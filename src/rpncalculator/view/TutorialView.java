@@ -1,5 +1,6 @@
 package rpncalculator.view;
 
+import rpncalculator.controler.CalculatorControler;
 import rpncalculator.model.Calculatrice;
 
 import javax.swing.*;
@@ -7,13 +8,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 public class TutorialView implements Observer{
 
     private final JFrame frame = new JFrame("Tutoriel");
-    private final JLabel modeLabel = new JLabel("Mode débutant");
     private JProgressBar progressBar = new JProgressBar();
     private TutorialControlPanel controlPanel = new TutorialControlPanel();
     private EquationPanel equationPanel = new EquationPanel();
@@ -35,17 +37,23 @@ public class TutorialView implements Observer{
                 JPanel content = new JPanel();
                 content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
                 content.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                content.add(modeLabel);
-                content.add(progressBar);
                 content.add(controlPanel);
+                content.add(progressBar);
                 content.add(equationPanel);
                 content.add(resetButton);
+
+                resetButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_CLEAR);
+                    }
+                });
 
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 frame.getContentPane().add(content);
                 frame.pack();
                 frame.setLocation(300,0);
-                frame.setSize(300,300);
+                frame.setSize(300,150);
             }
         });
     }
@@ -71,7 +79,7 @@ public class TutorialView implements Observer{
      * Value between 0 and 100
      * @param value
      */
-    public void setProgression(final int value){
+    private void setProgression(final int value){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -88,8 +96,22 @@ public class TutorialView implements Observer{
     public void update(Observable o, Object arg) {
         if(o instanceof Calculatrice){
             final Calculatrice c = (Calculatrice) o;
-            controlPanel.setExerciceName("Exercice n°" + c.obtenirExerciceEnCours().obtenirId());
-            equationPanel.setEquation(c.obtenirExerciceEnCours().obtenirQuestion());
+            if(c.obtenirExerciceEnCours() != null){
+                controlPanel.setExerciceName("Exercice n°" + c.obtenirExerciceEnCours().obtenirId());
+                equationPanel.setEquation(c.obtenirExerciceEnCours().obtenirQuestion());
+                if(c.validerSequence()){
+                    setProgression(c.obtenirProgresApprentissage());
+                    if(c.obtenirProgresApprentissage() == 100){
+                        equationPanel.setStatus(true);
+                    }
+                    else{
+                        equationPanel.setStatus(false);
+                    }
+                }
+                else{
+                    equationPanel.setStatus(false);
+                }
+            }
         }
     }
 }

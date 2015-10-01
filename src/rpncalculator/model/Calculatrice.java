@@ -19,9 +19,9 @@ public class Calculatrice extends Observable {
      * Constructeur par defaut
      */
     public Calculatrice(){
-        exercices.add(new Exercice(1,"1 + 1", "1.0 E 1.0 E +"));
-        exercices.add(new Exercice(2,"(3 + 1) / 2", "3.0 E 1.0 E + 2.0 E /"));
-        exercices.add(new Exercice(3,"(3 / 4) * (5 / 6)", "3.0 E 4.0 E / 5.0 E 6.0 E / *"));
+        exercices.add(new Exercice(1,"1 + 1", "1.0 E 1.0 +"));
+        exercices.add(new Exercice(2,"(3 + 1) / 2", "3.0 E 1.0 + E 2.0 /"));
+        exercices.add(new Exercice(3,"(3 / 4) x (5 / 6)", "3.0 E 4.0 / E 5.0 E 6.0 / x"));
     }
     
     /**
@@ -50,7 +50,6 @@ public class Calculatrice extends Observable {
 
     public void reinitialiser(){
         pile.clear();
-        exEnCours = null;
         sequence.clear();
         numberBuffer = new StringBuffer();
 
@@ -119,7 +118,9 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur somme
      **/
     public void ajouter(){
-        sequence.add(pile.peek().toString());
+        if(numberBuffer.length() > 0){
+            sequence.add(pile.peek().toString());
+        }
         pile.push(lire() + lire());
         sequence.add("+");
         this.setChanged();
@@ -131,7 +132,9 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur difference
      **/
     public void soustraire(){
-        sequence.add(pile.peek().toString());
+        if(numberBuffer.length() > 0) {
+            sequence.add(pile.peek().toString());
+        }
         Double a = lire();
         Double b = lire();
         pile.push(b - a);
@@ -145,7 +148,9 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur produit
      **/
     public void multiplier(){
-        sequence.add(pile.peek().toString());
+        if(numberBuffer.length() > 0) {
+            sequence.add(pile.peek().toString());
+        }
         pile.push(lire() * lire());
         sequence.add("x");
         this.setChanged();
@@ -157,7 +162,9 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur division
      **/
     public void diviser(){
-        sequence.add(pile.peek().toString());
+        if(numberBuffer.length() > 0) {
+            sequence.add(pile.peek().toString());
+        }
     	Double a = lire();
     	Double b = lire();
         //TODO : disivion par 0
@@ -213,7 +220,11 @@ public class Calculatrice extends Observable {
     public Exercice nouvelExercice(){
         pile.clear();
         sequence.clear();
-        exEnCours = exercices.get(random.nextInt(exercices.size()));
+        Exercice last = exEnCours;
+
+        while(last == exEnCours){
+            exEnCours = exercices.get(random.nextInt(exercices.size()));
+        }
 
         this.setChanged();
         this.notifyObservers();
