@@ -5,16 +5,22 @@ import rpncalculator.view.BasicCalculatorView;
 import rpncalculator.view.BeginnerCalculatorView;
 import rpncalculator.view.TutorialView;
 
-import java.util.Iterator;
-import java.util.Stack;
-
-
+/**
+ * Class CalculatorControler
+ * Classe ayant pour rôle Controler du pattern MVC.
+ * Implémente le pattern Singleton afin qu'il soit unique
+ */
 public class CalculatorControler {
 
-    private static CalculatorControler instance;
-
+    /**
+     * Mode basic = mode normale
+     * Mode beginner = mode avec aide et affichage de tutoriels
+     */
     public enum Mode {BASIC, BEGINNER}
 
+    /**
+     * Différentes constantes représentant les actions possible de la calculatrice
+     */
     public enum Operand {
         OPERAND_ADD,
         OPERAND_SUB,
@@ -22,15 +28,31 @@ public class CalculatorControler {
         OPERAND_DIV,
         OPERAND_ENTER,
         OPERAND_CLEAR
-        }
+    }
 
+    /**
+     * Instance unique de la classe
+     */
+    private static CalculatorControler instance;
+
+    /**
+     * Référence au modèle calculatrice
+     * @see Calculatrice
+     */
     private Calculatrice theCalculatrice;
+
+    /*
+        Références aux vues
+     */
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView beginnerView;
     private TutorialView tutorialView;
 
-    private Mode mode = Mode.BASIC;
-
+    /**
+     * Récupérer l'instance du controlleur
+     *
+     * @return CalculatorControler instance du controlleur
+     */
     public synchronized static CalculatorControler getInstance(){
         if(instance == null){
             instance = new CalculatorControler();
@@ -39,22 +61,32 @@ public class CalculatorControler {
     }
 
     private CalculatorControler(){
+        // Model init
         theCalculatrice= new Calculatrice();
+
+        // View init
         theBasicView= new BasicCalculatorView();
         beginnerView = new BeginnerCalculatorView();
         tutorialView = new TutorialView();
 
+        // Config observers
         theCalculatrice.addObserver(theBasicView);
         theCalculatrice.addObserver(beginnerView);
         theCalculatrice.addObserver(tutorialView);
-        theCalculatrice.nouvelExercice();
 
+        // Setup the calculatrice
+        theCalculatrice.nouvelExercice();
         switchMode(Mode.BASIC);
     }
 
+    /**
+     * Basculer du mode normale au mode débutant
+     *
+     * @see rpncalculator.controler.CalculatorControler.Mode
+     * @param newMode nouveau mode
+     */
     public void switchMode(Mode newMode){
-        this.mode = newMode;
-        if(mode.equals(Mode.BASIC)){
+        if(newMode.equals(Mode.BASIC)){
             theBasicView.show();
             beginnerView.close();
             tutorialView.close();
@@ -66,12 +98,23 @@ public class CalculatorControler {
         }
     }
 
+    /**
+     * Insertion d'un nouveau chiffre
+     *
+     * @param e char nouveau digit [0-9]
+     */
     public void performDigit(char e){
         if(e >= '0' && e <= '9'){
             theCalculatrice.addDigit(e);
         }
     }
 
+    /**
+     * Réalisation d'une opération
+     * @see rpncalculator.controler.CalculatorControler.Operand
+     *
+     * @param e Nouvelle opération à réaliser
+     */
     public void performOperand(Operand e){
         switch (e){
             case OPERAND_ADD:
@@ -96,6 +139,9 @@ public class CalculatorControler {
         }
     }
 
+    /**
+     * Changement d'exercice de la vue tutoriel
+     */
     public void newExercice() {
         theCalculatrice.nouvelExercice();
     }
