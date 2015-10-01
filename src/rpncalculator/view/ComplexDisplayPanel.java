@@ -7,16 +7,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
-import java.util.Stack;
 
+/**
+ * Panel personalisé affichant les valeurs courantes de la pile
+ */
 public class ComplexDisplayPanel extends JPanel implements ActionListener {
 
+    /**
+     * Historique de la séquence de l'opération en cours
+     */
     private JLabel operationField;
+
+    /*
+        Champs de la pile
+     */
     private JTextField xField;
     private JTextField yField;
     private JTextField zField;
     private JTextField tField;
-    private JButton trashButton;
 
     public ComplexDisplayPanel() {
         super();
@@ -29,6 +37,9 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
         });
     }
 
+    /**
+     * Construction de la vue
+     */
     private void createGUI() {
         xField = new JTextField();
         xField.setEditable(false);
@@ -57,7 +68,7 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
         operationField = new JLabel("",SwingConstants.RIGHT);
         operationField.setFont(new Font("SansSerif", Font.BOLD, 12));
 
-        trashButton = new JButton("D");
+        JButton trashButton = new JButton("D");
         trashButton.addActionListener(this);
 
         this.setLayout(new GridBagLayout());
@@ -130,7 +141,14 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
 
     }
 
-    void setValuesDisplayed(final Iterator<Double> it, final int size, final String operation) {
+    /**
+     * Mise à jour de l'affichage de la vue
+     *
+     * @param it itérateur sur la pile à afficher
+     * @param size taille courante de la pile
+     * @param operation texte de la séquence à mettre à jour
+     */
+    public void setValuesDisplayed(final Iterator<Double> it, final int size, final String operation) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

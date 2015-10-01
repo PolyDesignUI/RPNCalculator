@@ -8,11 +8,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Simple afficheur de la calculatrice
+ */
 public class DisplayPanel extends JPanel implements ActionListener{
 
+    /**
+     * Historique de la séquence de l'opération en cours
+     */
     private JLabel operationField;
+
+    /**
+     * Afficheur
+     */
     private JTextField displayField;
-    private JButton trashButton;
 
     public DisplayPanel() {
         super();
@@ -25,6 +34,9 @@ public class DisplayPanel extends JPanel implements ActionListener{
         });
     }
 
+    /**
+     * Création de la vue
+     */
     private void createGUI() {
         displayField = new JTextField();
         displayField.setEditable(false);
@@ -32,7 +44,7 @@ public class DisplayPanel extends JPanel implements ActionListener{
         displayField.setText("0");
         displayField.setHorizontalAlignment(JTextField.RIGHT);
 
-        trashButton = new JButton("D");
+        JButton trashButton = new JButton("D");
         trashButton.addActionListener(this);
 
         operationField = new JLabel("",SwingConstants.RIGHT);
@@ -66,6 +78,12 @@ public class DisplayPanel extends JPanel implements ActionListener{
         this.add(operationField,gridBagConstraints);
     }
 
+    /**
+     * Mise à jour de l'affichage de la vue
+     *
+     * @param value résultat de l'opération courante à afficher
+     * @param operation texte de la séquence à mettre à jour
+     */
     public void setValueDisplayed(final double value, final String operation){
         SwingUtilities.invokeLater(new Runnable() {
             @Override

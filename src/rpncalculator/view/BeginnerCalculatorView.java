@@ -6,17 +6,36 @@ import rpncalculator.model.Calculatrice;
 import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Stack;
 
+/**
+ * Vue de la calculatrice en mode débutant
+ */
 public class BeginnerCalculatorView  implements Observer {
 
+    /**
+     * Fenetre conteneur
+     */
     private JFrame frame = new JFrame("RPN");
 
+    /**
+     * Affichage du switch entre le mode normale et débutant
+     */
     private LevelPanel level;
+
+    /**
+     * Affichage de la pile en plus de l'afficheur des résultats de la calculatrice
+     */
     private ComplexDisplayPanel display;
+
+    /**
+     * Affichage du pavé numérique de la calculatrice
+     */
     private KeyboardPanel keyboard;
 
-    public void createGUI(){
+    /**
+     * Méthode permettant la construction de la vue
+     */
+    private void createGUI(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -45,6 +64,9 @@ public class BeginnerCalculatorView  implements Observer {
         createGUI();
     }
 
+    /**
+     * Ferme la fenetre
+     */
     public void close(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -54,6 +76,9 @@ public class BeginnerCalculatorView  implements Observer {
         });
     }
 
+    /**
+     * Affiche la fenetre
+     */
     public void show(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -67,7 +92,10 @@ public class BeginnerCalculatorView  implements Observer {
     public void update(Observable o, Object arg) {
         if(o instanceof Calculatrice){
             Calculatrice c = (Calculatrice) o;
-            display.setValuesDisplayed(c.getPile().iterator(),c.getPile().size(),c.getSequence());
+            display.setValuesDisplayed(
+                    c.lirePile(),
+                    c.getSize(),
+                    c.getSequence());
         }
     }
 }

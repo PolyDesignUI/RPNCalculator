@@ -8,15 +8,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *  Panel de controle des modes débutant et normal
+ */
 public class LevelPanel extends JPanel implements ActionListener {
-
-    public static final int STATE_BASIC = 1;
-    public static final int STATE_BEGINNER = 2;
 
     private JButton beginnerButton;
     private JButton basicButton;
 
-    public LevelPanel(final int state) {
+    public LevelPanel(final CalculatorControler.Mode state) {
         super();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -28,6 +28,9 @@ public class LevelPanel extends JPanel implements ActionListener {
         });
     }
 
+    /**
+     * Création de la vue
+     */
     private void createGUI(){
         beginnerButton = new JButton();
         beginnerButton.setText("Mode débutant");
@@ -46,11 +49,11 @@ public class LevelPanel extends JPanel implements ActionListener {
         this.add(basicButton);
     }
 
-    public void setState(final int state){
+    private void setState(final CalculatorControler.Mode state){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(state == STATE_BASIC){
+                if(state == CalculatorControler.Mode.BEGINNER){
                     beginnerButton.setEnabled(true);
                     basicButton.setEnabled(false);
                 }

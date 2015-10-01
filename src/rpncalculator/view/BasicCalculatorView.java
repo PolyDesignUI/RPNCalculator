@@ -1,19 +1,35 @@
 package rpncalculator.view;
 
 
-import rpncalculator.controler.CalculatorControler;
 import rpncalculator.model.Calculatrice;
 
 import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Vue de la calculatrice en mode normale
+ */
 public class BasicCalculatorView implements Observer{
 
+    /**
+     * Fenêtre conteneur
+     */
     private JFrame frame = new JFrame("RPN");
 
+    /**
+     * Affichage du switch entre le mode normale et débutant
+     */
     private LevelPanel level;
+
+    /**
+     * Affichage du champ de réponse de la calculatrice
+     */
     private DisplayPanel display;
+
+    /**
+     * Affichage du pavé numérique de la calculatrice
+     */
     private KeyboardPanel keyboard;
 
     public BasicCalculatorView() {
@@ -23,7 +39,10 @@ public class BasicCalculatorView implements Observer{
         createGUI();
     }
 
-    public void createGUI(){
+    /**
+     * Méthode permettant la construction de la vue
+     */
+    private void createGUI(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -43,6 +62,9 @@ public class BasicCalculatorView implements Observer{
         });
     }
 
+    /**
+     * Ferme la fenetre
+     */
     public void close(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -52,6 +74,9 @@ public class BasicCalculatorView implements Observer{
         });
     }
 
+    /**
+     * Affiche la fenetre
+     */
     public void show(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override

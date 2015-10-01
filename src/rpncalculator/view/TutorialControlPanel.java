@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * Panel de controle de l'exercice en cours
+ */
 public class TutorialControlPanel extends JPanel implements ActionListener {
 
     private JButton next = new JButton(">");
@@ -24,6 +26,9 @@ public class TutorialControlPanel extends JPanel implements ActionListener {
         });
     }
 
+    /**
+     * Construction de la vue
+     */
     private void createGUI() {
         this.setLayout(new FlowLayout());
         this.add(exercice);
@@ -31,6 +36,10 @@ public class TutorialControlPanel extends JPanel implements ActionListener {
         next.addActionListener(this);
     }
 
+    /**
+     * Mise à jour du nom de l'exercice
+     * @param s nouveau nom
+     */
     public void setExerciceName(final String s){
         SwingUtilities.invokeLater(new Runnable() {
             @Override

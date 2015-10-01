@@ -5,7 +5,6 @@ import java.util.*;
 /**
  * Cette classe represente une calculatrice RPN avec une pile de taille 4.
  * @author Dany Khalife
- * @date 9/4/2014
  */
 public class Calculatrice extends Observable {
     private final int TAILLE_MAX = 4;
@@ -46,9 +45,6 @@ public class Calculatrice extends Observable {
     public ListIterator<Double> lirePile(){
         return pile.listIterator();
     }
-
-    //this method gives the stack
-    public Stack<Double> getPile() {return pile; }
 
     /**
      * Retourne la taille de la pile
@@ -291,11 +287,8 @@ public class Calculatrice extends Observable {
      * Cette methode permet de valider si la sequence effectue 
      * @return True si la sequence actuelle correspond a celle attendue pour l'exercice courant, False sinon.
      */
-    public boolean validerSequence(){
-        if(exEnCours == null)
-            return false;
-        
-        return exEnCours.obtenirSequence().toLowerCase().startsWith(join(sequence, " ").toLowerCase());
+    public boolean validerSequence() {
+        return exEnCours != null && exEnCours.obtenirSequence().toLowerCase().startsWith(join(sequence, " ").toLowerCase());
     }
     
     /**

@@ -10,8 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Panel numérique de la calculatrice
+ */
 public class KeyboardPanel extends JPanel implements ActionListener, KeyListener {
 
+    /*
+        Boutons actions
+     */
     private JButton addButton;
     private JButton subButton;
     private JButton mulButton;
@@ -19,6 +25,9 @@ public class KeyboardPanel extends JPanel implements ActionListener, KeyListener
 
     private JButton enterButton;
 
+    /*
+        Boutons numérique 0-9
+     */
     private JButton oneButton;
     private JButton twoButton;
     private JButton threeButton;
@@ -41,6 +50,9 @@ public class KeyboardPanel extends JPanel implements ActionListener, KeyListener
         });
     }
 
+    /**
+     * Construction de la vue
+     */
     private void createGUI() {
         addButton = new JButton("+");
         addButton.setActionCommand("add");
@@ -214,6 +226,10 @@ public class KeyboardPanel extends JPanel implements ActionListener, KeyListener
 
     }
 
+    /**
+     * Pour gérer la pression des touches à partir du clavier
+     * @param e KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode()+" -> " +e.getKeyChar());
