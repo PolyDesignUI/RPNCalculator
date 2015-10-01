@@ -19,9 +19,9 @@ public class Calculatrice extends Observable {
      * Constructeur par defaut
      */
     public Calculatrice(){
-        exercices.add(new Exercice("1 + 1", "1.0 E 1.0 E +"));
-        exercices.add(new Exercice("(3 + 1) / 2", "3.0 E 1.0 E + 2.0 E /"));
-        exercices.add(new Exercice("(3 / 4) * (5 / 6)", "3.0 E 4.0 E / 5.0 E 6.0 E / *"));
+        exercices.add(new Exercice(1,"1 + 1", "1.0 E 1.0 E +"));
+        exercices.add(new Exercice(2,"(3 + 1) / 2", "3.0 E 1.0 E + 2.0 E /"));
+        exercices.add(new Exercice(3,"(3 / 4) * (5 / 6)", "3.0 E 4.0 E / 5.0 E 6.0 E / *"));
     }
     
     /**
@@ -213,7 +213,11 @@ public class Calculatrice extends Observable {
     public Exercice nouvelExercice(){
         pile.clear();
         sequence.clear();
-        exEnCours = exercices.get(random.nextInt(exercices.size()));        
+        exEnCours = exercices.get(random.nextInt(exercices.size()));
+
+        this.setChanged();
+        this.notifyObservers();
+
         return exEnCours;
     }
     

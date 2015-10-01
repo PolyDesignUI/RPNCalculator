@@ -9,13 +9,16 @@ public class Exercice {
     private String question;
     // La sequence d'operation attendue comme reponse
     private String sequence;
+
+    private int id;
     
     /**
      * Constructeur par parametre
      * @param question La question
      * @param sequence La sequence attendue
      */
-    public Exercice(String question, String sequence){
+    public Exercice(int id, String question, String sequence){
+        this.id = id;
         this.question = question;
         this.sequence = sequence;
     }
@@ -34,5 +37,9 @@ public class Exercice {
      */
     public String obtenirSequence(){
         return sequence;
+    }
+
+    public int obtenirId(){
+        return id;
     }
 }

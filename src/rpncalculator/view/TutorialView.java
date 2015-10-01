@@ -1,12 +1,16 @@
 package rpncalculator.view;
 
+import rpncalculator.model.Calculatrice;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TutorialView {
+public class TutorialView implements Observer{
 
     private final JFrame frame = new JFrame("Tutoriel");
     private final JLabel modeLabel = new JLabel("Mode débutant",SwingConstants.CENTER);
@@ -20,9 +24,10 @@ public class TutorialView {
 
     public TutorialView() {
         errorDocument = errorLog.getStyledDocument();
+        createGUI();
     }
 
-    public void createGUI(){
+    private void createGUI(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +45,7 @@ public class TutorialView {
                 content.add(progressBar);
                 content.add(controlPanel);
                 content.add(equationPanel);
-                content.add(errorLog);
+                //content.add(errorLog);
                 content.add(resetButton);
                 content.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
@@ -91,5 +96,13 @@ public class TutorialView {
 
     public static void main(String[] args) {
         new TutorialView();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof Calculatrice){
+            final Calculatrice c = (Calculatrice) o;
+            controlPanel.setExerciceName("Exercice n°" + c.obtenirExerciceEnCours().obtenirId());
+        }
     }
 }

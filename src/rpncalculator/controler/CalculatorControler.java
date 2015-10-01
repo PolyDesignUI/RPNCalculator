@@ -3,6 +3,7 @@ package rpncalculator.controler;
 import rpncalculator.model.Calculatrice;
 import rpncalculator.view.BasicCalculatorView;
 import rpncalculator.view.BeginnerCalculatorView;
+import rpncalculator.view.TutorialView;
 
 import java.util.Iterator;
 import java.util.Stack;
@@ -26,6 +27,7 @@ public class CalculatorControler {
     private Calculatrice theCalculatrice;
     private BasicCalculatorView theBasicView;
     private BeginnerCalculatorView beginnerView;
+    private TutorialView tutorialView;
 
     private Mode mode = Mode.BASIC;
 
@@ -40,8 +42,12 @@ public class CalculatorControler {
         theCalculatrice= new Calculatrice();
         theBasicView= new BasicCalculatorView();
         beginnerView = new BeginnerCalculatorView();
+        tutorialView = new TutorialView();
+
         theCalculatrice.addObserver(theBasicView);
         theCalculatrice.addObserver(beginnerView);
+        theCalculatrice.addObserver(tutorialView);
+
         switchMode(Mode.BASIC);
     }
 
@@ -54,6 +60,7 @@ public class CalculatorControler {
         else{
             theBasicView.close();
             beginnerView.show();
+            theCalculatrice.nouvelExercice();
         }
     }
 
@@ -87,5 +94,8 @@ public class CalculatorControler {
         }
     }
 
+    public void newExercice() {
+        theCalculatrice.nouvelExercice();
+    }
 
 }
