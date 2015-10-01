@@ -35,7 +35,7 @@ public class DisplayPanel extends JPanel implements ActionListener{
         trashButton = new JButton("D");
         trashButton.addActionListener(this);
 
-        operationField = new JLabel("");
+        operationField = new JLabel("",SwingConstants.RIGHT);
         operationField.setFont(new Font("SansSerif", Font.BOLD, 12));
 
         this.setLayout(new GridBagLayout());

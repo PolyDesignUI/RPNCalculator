@@ -54,7 +54,7 @@ public class ComplexDisplayPanel extends JPanel implements ActionListener {
         tField.setText("0");
         tField.setHorizontalAlignment(JTextField.RIGHT);
 
-        operationField = new JLabel("");
+        operationField = new JLabel("",SwingConstants.RIGHT);
         operationField.setFont(new Font("SansSerif", Font.BOLD, 12));
 
         trashButton = new JButton("D");
