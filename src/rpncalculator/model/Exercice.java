@@ -9,11 +9,12 @@ public class Exercice {
     private String question;
     // La sequence d'operation attendue comme reponse
     private String sequence;
-
+    // Numéro d'un exercice
     private int id;
     
     /**
      * Constructeur par parametre
+     * @param id le numéro
      * @param question La question
      * @param sequence La sequence attendue
      */
@@ -39,6 +40,10 @@ public class Exercice {
         return sequence;
     }
 
+    /**
+     * Numéro de l'exercice
+     * @return Le numéro
+     */
     public int obtenirId(){
         return id;
     }

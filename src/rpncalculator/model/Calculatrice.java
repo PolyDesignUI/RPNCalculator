@@ -14,12 +14,20 @@ public class Calculatrice extends Observable {
     private Exercice exEnCours;
     private Random random = new Random();
     private ArrayList<String> sequence = new ArrayList<String>();
+
+    /**
+     * Buffer permettant de stocker l'ensemble des chiffres inséré afin de composer le nombre final
+     */
     private StringBuffer numberBuffer = new StringBuffer();
+
     /**
      * Constructeur par defaut
      */
     public Calculatrice(){
-        exercices.add(new Exercice(1,"1 + 1", "1.0 E 1.0 +"));
+        // Actualisation des réponses aux exercices.
+        // Lire : http://www.calculator.org/rpn.aspx
+        // Rq : on ne doit pas presser Enter entre un chiffre et une opération, exemple :
+        exercices.add(new Exercice(1,"1 + 1", "1.0 E 1.0 +")); // et pas 1.0 E 1.0 E +
         exercices.add(new Exercice(2,"(3 + 1) / 2", "3.0 E 1.0 + E 2.0 /"));
         exercices.add(new Exercice(3,"(3 / 4) x (5 / 6)", "3.0 E 4.0 / E 5.0 E 6.0 / x"));
     }
@@ -38,36 +46,40 @@ public class Calculatrice extends Observable {
     public ListIterator<Double> lirePile(){
         return pile.listIterator();
     }
-	
-    /**
-     * Cette methtode permet de reinitialiser la calculatrice
-     */
 
     //this method gives the stack
     public Stack<Double> getPile() {return pile; }
 
+    /**
+     * Retourne la taille de la pile
+     * @return un entier compris entre 0 et 4
+     */
+    public int getSize(){
+        return pile.size();
+    }
 
-
+    /**
+     * Cette methtode permet de reinitialiser la calculatrice
+     */
     public void reinitialiser(){
         pile.clear();
         sequence.clear();
         numberBuffer = new StringBuffer();
 
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
-
-
 	
     /**
-     * Cette methode permet d'empiler un operande sur la pile.
+     * Cette methode permet d'empiler la valeur contenu dans le buffer sur la pile.
      */
     public void enter(){
         if(pile.size() == TAILLE_MAX){
             pile.remove(0);
         }
 
-        if(numberBuffer.length() == 0){
+        if(numberBuffer.length() == 0){  // Buffer vide, on emplie 0 ou la dernière valeur de la pile
             if(pile.empty()){
                 pile.push(0.0);
             }
@@ -81,21 +93,37 @@ public class Calculatrice extends Observable {
         }
 
         sequence.add("E");
+
+        // Réinitialisation du bugger
         numberBuffer = new StringBuffer();
 
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
 
+    /**
+     * Ajout d'un digit pour composer le nombre final
+     *
+     * @param e caractère compris entre 0 et 9
+     */
     public void addDigit(char e){
+
         numberBuffer.append(e);
+
+        // Si la pile n'est pas vide on supprime la dernière valeur pour ajouter le nombre actualisé
         if(pile.size() > 0){
             pile.pop();
         }
+
         if(pile.size() == TAILLE_MAX){
             pile.remove(0);
         }
+
+        // Ajout du nouveau nombre comprenant le digit ajouté
         pile.push(Double.parseDouble(numberBuffer.toString()));
+
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
@@ -118,11 +146,15 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur somme
      **/
     public void ajouter(){
+        // Ajout automatique à la séquence du nombre inséré
         if(numberBuffer.length() > 0){
             sequence.add(pile.peek().toString());
         }
+
         pile.push(lire() + lire());
         sequence.add("+");
+
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
@@ -132,13 +164,17 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur difference
      **/
     public void soustraire(){
+        // Ajout automatique à la séquence du nombre inséré
         if(numberBuffer.length() > 0) {
             sequence.add(pile.peek().toString());
         }
+
         Double a = lire();
         Double b = lire();
         pile.push(b - a);
         sequence.add("-");
+
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
@@ -148,11 +184,14 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur produit
      **/
     public void multiplier(){
+        // Ajout automatique à la séquence du nombre inséré
         if(numberBuffer.length() > 0) {
             sequence.add(pile.peek().toString());
         }
         pile.push(lire() * lire());
         sequence.add("x");
+
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
@@ -162,6 +201,7 @@ public class Calculatrice extends Observable {
      * elements sur la pile par leur division
      **/
     public void diviser(){
+        // Ajout automatique à la séquence du nombre inséré
         if(numberBuffer.length() > 0) {
             sequence.add(pile.peek().toString());
         }
@@ -171,6 +211,8 @@ public class Calculatrice extends Observable {
         if(a==0){throw new IllegalArgumentException("Argument 'divisor' is 0");}
         pile.push(b / a);
         sequence.add("/");
+
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
     }
@@ -178,7 +220,7 @@ public class Calculatrice extends Observable {
     /**
      * Cette methode permet d'obtenir le resultat obtenu suite a l'execution
      * de la sequence d'operation prealablement fournie.
-     * @return 
+     * @return double
      */
     public double obtenirResultat(){
         if(pile.isEmpty())
@@ -187,6 +229,10 @@ public class Calculatrice extends Observable {
         return pile.peek();
     }
 
+    /**
+     * Récupération de l'historique de la séquence
+     * @return String séquence complète
+     */
     public String getSequence(){
         return join(sequence, " ");
     }
@@ -215,7 +261,7 @@ public class Calculatrice extends Observable {
      * Cette methode permet d'obtenir un exercice 
      * Si aucun exercice est en cours, celle-ci assigne un au hasard
      * 
-     * @return Un exercice choisi au hasard
+     * @return Un exercice choisi au hasard et différent de l'ancien
      */
     public Exercice nouvelExercice(){
         pile.clear();
@@ -226,6 +272,7 @@ public class Calculatrice extends Observable {
             exEnCours = exercices.get(random.nextInt(exercices.size()));
         }
 
+        // Notification à la vue d'un changement
         this.setChanged();
         this.notifyObservers();
 
