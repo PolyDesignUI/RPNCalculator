@@ -47,6 +47,7 @@ public class CalculatorControler {
         theCalculatrice.addObserver(theBasicView);
         theCalculatrice.addObserver(beginnerView);
         theCalculatrice.addObserver(tutorialView);
+        theCalculatrice.nouvelExercice();
 
         switchMode(Mode.BASIC);
     }
@@ -56,11 +57,12 @@ public class CalculatorControler {
         if(mode.equals(Mode.BASIC)){
             theBasicView.show();
             beginnerView.close();
+            tutorialView.close();
         }
         else{
             theBasicView.close();
             beginnerView.show();
-            theCalculatrice.nouvelExercice();
+            tutorialView.show();
         }
     }
 

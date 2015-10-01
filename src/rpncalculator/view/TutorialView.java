@@ -13,17 +13,14 @@ import java.util.Observer;
 public class TutorialView implements Observer{
 
     private final JFrame frame = new JFrame("Tutoriel");
-    private final JLabel modeLabel = new JLabel("Mode débutant",SwingConstants.CENTER);
+    private final JLabel modeLabel = new JLabel("Mode débutant");
     private JProgressBar progressBar = new JProgressBar();
     private TutorialControlPanel controlPanel = new TutorialControlPanel();
     private EquationPanel equationPanel = new EquationPanel();
-    private JTextPane errorLog = new JTextPane();
     private final JButton resetButton = new JButton("Recommencer");
-    private StyledDocument errorDocument;
 
 
     public TutorialView() {
-        errorDocument = errorLog.getStyledDocument();
         createGUI();
     }
 
@@ -32,28 +29,23 @@ public class TutorialView implements Observer{
             @Override
             public void run() {
 
-                errorLog.setEditable(false);
-                errorLog.setAlignmentX(Component.CENTER_ALIGNMENT);
-                modeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
                 progressBar.setMinimum(0);
                 progressBar.setMaximum(100);
 
                 JPanel content = new JPanel();
                 content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+                content.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 content.add(modeLabel);
                 content.add(progressBar);
                 content.add(controlPanel);
                 content.add(equationPanel);
-                //content.add(errorLog);
                 content.add(resetButton);
-                content.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 frame.getContentPane().add(content);
                 frame.pack();
+                frame.setLocation(300,0);
                 frame.setSize(300,300);
-                frame.setVisible(true);
             }
         });
     }
@@ -63,7 +55,14 @@ public class TutorialView implements Observer{
             @Override
             public void run() {
                 frame.setVisible(false);
-                frame.dispose();
+            }
+        });
+    }
+    public void show(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setVisible(true);
             }
         });
     }
@@ -81,19 +80,6 @@ public class TutorialView implements Observer{
         });
     }
 
-    public void setError(final String error){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    errorDocument.insertString(errorDocument.getLength(),'\n'+error, new SimpleAttributeSet());
-                } catch (BadLocationException e) {
-                    errorLog.setText(error);
-                }
-            }
-        });
-    }
-
     public static void main(String[] args) {
         new TutorialView();
     }
@@ -103,6 +89,7 @@ public class TutorialView implements Observer{
         if(o instanceof Calculatrice){
             final Calculatrice c = (Calculatrice) o;
             controlPanel.setExerciceName("Exercice n°" + c.obtenirExerciceEnCours().obtenirId());
+            equationPanel.setEquation(c.obtenirExerciceEnCours().obtenirQuestion());
         }
     }
 }
