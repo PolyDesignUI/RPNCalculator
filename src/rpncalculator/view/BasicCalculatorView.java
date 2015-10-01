@@ -33,6 +33,8 @@ public class BasicCalculatorView implements Observer{
                 content.add(display);
                 content.add(keyboard);
 
+                frame.setFocusable(true);
+                frame.addKeyListener(keyboard);
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 frame.getContentPane().add(content);
                 frame.pack();

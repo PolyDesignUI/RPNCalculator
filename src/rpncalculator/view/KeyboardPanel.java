@@ -7,8 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class KeyboardPanel extends JPanel implements ActionListener {
+public class KeyboardPanel extends JPanel implements ActionListener, KeyListener {
 
     private JButton addButton;
     private JButton subButton;
@@ -205,5 +207,69 @@ public class KeyboardPanel extends JPanel implements ActionListener {
         else if("enter".equals(e.getActionCommand())){
             CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_ENTER);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode()+" -> " +e.getKeyChar());
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_0:
+                CalculatorControler.getInstance().performDigit('0');
+                break;
+            case KeyEvent.VK_1:
+                CalculatorControler.getInstance().performDigit('1');
+                break;
+            case KeyEvent.VK_2:
+                CalculatorControler.getInstance().performDigit('2');
+                break;
+            case KeyEvent.VK_3:
+                CalculatorControler.getInstance().performDigit('3');
+                break;
+            case KeyEvent.VK_4:
+                CalculatorControler.getInstance().performDigit('4');
+                break;
+            case KeyEvent.VK_5:
+                CalculatorControler.getInstance().performDigit('5');
+                break;
+            case KeyEvent.VK_6:
+                CalculatorControler.getInstance().performDigit('6');
+                break;
+            case KeyEvent.VK_7:
+                CalculatorControler.getInstance().performDigit('7');
+                break;
+            case KeyEvent.VK_8:
+                CalculatorControler.getInstance().performDigit('8');
+                break;
+            case KeyEvent.VK_9:
+                CalculatorControler.getInstance().performDigit('9');
+                break;
+            case KeyEvent.VK_ENTER:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_ENTER);
+                break;
+            case KeyEvent.VK_PLUS:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_ADD);
+                break;
+            case KeyEvent.VK_MINUS:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_SUB);
+                break;
+            case KeyEvent.VK_MULTIPLY:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_MUL);
+                break;
+            case KeyEvent.VK_DIVIDE:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_DIV);
+                break;
+            case KeyEvent.VK_CLEAR:
+                CalculatorControler.getInstance().performOperand(CalculatorControler.Operand.OPERAND_CLEAR);
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

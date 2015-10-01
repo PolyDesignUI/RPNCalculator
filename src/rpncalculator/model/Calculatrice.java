@@ -181,7 +181,7 @@ public class Calculatrice extends Observable {
     }
 
     public String getSequence(){
-        return join(sequence, " ").toLowerCase();
+        return join(sequence, " ");
     }
 
     /**
